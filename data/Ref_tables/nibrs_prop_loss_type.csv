@@ -1,0 +1,9 @@
+prop_loss_id,prop_loss_name
+1,None
+2,Burned
+3,Counterfeited/Forged
+4,Destroyed/Damaged/Vandalized
+5,Recovered
+6,Seized
+7,Stolen/Etc
+8,Unknown

@@ -123,3 +123,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+**/data/pickled_models
+**/data/sqlite/db
+**/data/pickled_dataframes
+**/data/incidents
+**/backups

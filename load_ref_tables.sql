@@ -1,0 +1,23 @@
+mode csv
+import 'data/CO-2009/nibrs_age.csv' nibrs_age
+import 'data/CO-2009/nibrs_arrest_type.csv' nibrs_arrest_type
+import 'data/CO-2009/nibrs_assignment_type.csv' nibrs_assignment_type
+import 'data/CO-2009/nibrs_bias_list.csv' nibrs_bias_list
+import 'data/CO-2009/nibrs_circumstances.csv' nibrs_circumstances
+import 'data/CO-2009/nibrs_cleared_except.csv' nibrs_cleared_except
+import 'data/CO-2009/nibrs_criminal_act_type.csv' nibrs_criminal_act_type
+import 'data/CO-2009/nibrs_drug_measure_type.csv' nibrs_drug_measure_type
+import 'data/CO-2009/nibrs_ethnicity.csv' nibrs_ethnicity
+import 'data/CO-2009/nibrs_injury.csv' nibrs_injury
+import 'data/CO-2009/nibrs_justifiable_force.csv' nibrs_justifiable_force
+import 'data/CO-2009/nibrs_location_type.csv' nibrs_location_type
+import 'data/CO-2009/nibrs_offense_type.csv' nibrs_offense_type
+import 'data/CO-2009/nibrs_prop_desc_type.csv' nibrs_prop_desc_type
+import 'data/CO-2009/nibrs_prop_loss_type.csv' nibrs_prop_loss_type
+import 'data/CO-2009/nibrs_relationship.csv' nibrs_relationship
+import 'data/CO-2009/nibrs_suspected_drug_type.csv' nibrs_suspected_drug_type
+import 'data/CO-2009/nibrs_using_list.csv' nibrs_using_list
+import 'data/CO-2009/nibrs_victim_type.csv' nibrs_victim_type
+import 'data/CO-2009/nibrs_weapon_type.csv' nibrs_weapon_type
+import 'data/CO-2009/ref_race.csv' ref_race
+import 'data/CO-2009/ref_state.csv' ref_state

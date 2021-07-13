@@ -1,0 +1,37 @@
+bias_id,bias_code,bias_name
+23,16,Anti-Native Hawaiian or Other Pacific Islander
+24,51,Anti-Physical Disability
+25,52,Anti-Mental Disability
+26,61,Anti-Male
+27,62,Anti-Female
+28,71,Anti-Transgender
+29,72,Anti-Gender Non-Conforming
+1,11,Anti-White
+2,12,Anti-Black or African American
+3,13,Anti-American Indian or Alaska Native
+4,14,Anti-Asian
+5,15,Anti-Multi-Racial Group
+6,21,Anti-Jewish
+7,22,Anti-Catholic
+8,23,Anti-Protestant
+9,24,Anti-Islamic (Muslem)
+10,25,Anti-Other Religion
+11,26,Anti-Multi-Religious Group
+12,27,Anti-Atheist/Agnosticism
+13,31,Anti-Arab
+14,32,Anti-Hispanic or Latino
+15,33,Anti-Not Hispanic or Latino
+16,41,Anti-Male Homosexual (Gay)
+17,42,Anti-Female Homosexual (Lesbian)
+18,43,"Anti-Lesbian, Gay, Bisexual, or Transgender, Mixed Group (LGBT)"
+19,44,Anti-Heterosexual
+20,45,Anti-Bisexual
+21,88,None
+22,99,Unknown
+30,28,Anti-Mormon
+31,29,Anti-Jehovah's Witness
+32,81,Anti-Eastern Orthodox
+33,82,Anti-Other Christian
+34,83,Anti-Buddhist
+35,84,Anti-Hindu
+36,85,Anti-Sikh
