@@ -1,0 +1,24 @@
+.page {
+    height: 1000px;
+    display: flex;
+    flex-direction: column;
+    border: thin solid black;
+    background-image: url('images/crime-scene.jpg')
+  }
+  
+  .remainder {
+    flex-grow: 1;
+    
+    display: flex;
+  }
+  
+  .block {
+      flex-direction: row;
+      flex-wrap: wrap;
+      box-sizing: border-box;
+      flex-grow: 1;   
+  }
+  
+  .graph {
+    border: dashed thick hotpink;
+  }
