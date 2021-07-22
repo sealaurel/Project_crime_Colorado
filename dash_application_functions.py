@@ -14,6 +14,16 @@ from functions_all import *
 
 CO_county_json=json.load(open('data/CO_counties_geo.json', 'r'))
 
+with open('data/pickled_models/model_auto_for.pickle', 'rb') as f:
+        model=pickle.load(f)
+
+with open('data/pickled_ts/ts_weekly.pickle', 'rb') as f:
+        ts=pickle.load(f)
+
+with open('data/pickled_dataframes/df_full_clean.pickle', 'rb') as f:
+        df_full=pickle.load(f)
+    
+    
 def make_menu_options(list_for_menu):
     """Making a list of dictionaries for menu choices out of a list of strings """
     options=[]
@@ -145,14 +155,12 @@ def plot_county_map(df):
         })
     return fig
 
-def create_dataframes(freq='M'):
+def create_dataframes(df=df_full, freq='M'):
     """Creating all dataframes used in the app and returning them, prodive frequency to group crime categories"""
     # Loading the main dataframe
-    with open('data/pickled_dataframes/df_full_clean.pickle', 'rb') as f:
-        df_full=pickle.load(f)
-
     # Creating a df to work with moving forward
-    df_to_use=df_full.copy()
+
+    df_to_use=df.copy()
     df_to_use['year']=df_to_use['timestamp'].dt.year
     df_to_use['offense_id']=1
     df_to_use.drop(columns=['incident_id','agency_id'], inplace=True)
@@ -201,3 +209,98 @@ def create_dataframes(freq='M'):
     df_grouped_zip=df_grouped_zip.sort_values(by=['year'])
     
     return color_discrete_map_, df_to_use, df_grouped_crime_against, df_crime_categories, df_grouped_county, df_grouped_zip
+
+def plot_predictions_px(ts, model, title, steps=104, egog_flag=False, exog=None):
+    """The function plots prediction for a model and a dataset in a pretty format.
+    Arguments:
+    ts: timeseries
+    model: the model
+    title: title of the plot, str
+    steps: steps to make a forecast for, default is 52 (weeks in one year, when
+                                                        using exogeneous predictors be aware of their weeks,
+                                                        there might be more or less)
+    xmin:  the start year to plot, default '2009'
+    xmax:  the end year to plot, default '2022'
+    figsize: figure size to use, default is (15,7)
+    egog_flag: flag if  the model has exogeneous predictor, defalt is False
+    exog: exogeneous predictors, array or a df, default is None"""
+
+    
+    if egog_flag:
+        forecast = model.get_forecast(steps=steps, exog=exog)
+    else:
+        forecast = model.get_forecast(steps=steps)
+
+    forecast_conf = forecast.conf_int()
+
+    # Plotting
+
+    fig = go.Figure([
+    go.Scatter(
+        name='Crime Data',
+        x=ts.index, y=ts.values,
+        mode='lines',
+        line=dict(color='rgb(31, 119, 180)'),
+    ),
+    go.Scatter(
+        name='Upper Bound',
+        x=forecast_conf.index, y=forecast_conf.iloc[:, 0],
+        mode='lines',
+        marker=dict(color="#444"),
+        line=dict(width=0),
+        showlegend=False
+    ),
+         
+    go.Scatter(
+        name='Forecast with Confidence Intervals',
+        x=forecast.predicted_mean.index,
+        y=forecast.predicted_mean.values,
+        marker=dict(color='black'),
+        line=dict(width=2),
+        mode='lines',
+        fillcolor='rgba(68, 68, 68, 0.3)',
+        fill='tonexty',
+        showlegend=True), 
+        
+    go.Scatter(
+        name='Lower Bound',
+        x=forecast_conf.index, y=forecast_conf.iloc[:, 1],
+        marker=dict(color="#444"),
+        line=dict(width=0),
+        mode='lines',
+        fillcolor='rgba(68, 68, 68, 0.3)',
+        fill='tonexty',
+        showlegend=False
+    )
+])
+    fig.update_layout(
+    template='ggplot2',
+    title=title
+    )
+
+    fig.update_layout(
+        font_family="Calibri",
+        font_color="black",
+        font_size=20,
+        legend_font_size=18,
+        title_font_family="Calibri",
+        title_font_size=36)
+
+    fig.update_layout(width=1200,
+                      height=600)
+
+    fig.update_layout(
+        title={
+            'y':0.91,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top',
+        },
+        yaxis = dict(
+                title = 'Number of Offenses',zeroline=True,
+                showline = True),
+        xaxis = dict(
+                title = 'Year',zeroline=True,
+                showline = True),
+                )
+    return fig

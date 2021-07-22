@@ -7,6 +7,8 @@
 
 # Run this app with `python app.py` and
 # visit http://127.0.0.1:8050/ in your web browser.
+
+
 import dash
 import pickle
 import dash_core_components as dcc
@@ -25,12 +27,18 @@ from dash_application_functions import *
 import warnings
 warnings.filterwarnings(action='ignore', category=FutureWarning)
 
-color_discrete_map_,df_to_use,df_grouped_crime_against,df_crime_categories,df_grouped_county,df_grouped_zip=create_dataframes()
+color_discrete_map_, df_to_use,df_grouped_crime_against,df_crime_categories, df_grouped_county, df_grouped_zip=create_dataframes()
 
+with open('data/pickled_models/model_auto_for.pickle', 'rb') as f:
+        model=pickle.load(f)
 
+with open('data/pickled_ts/ts_weekly.pickle', 'rb') as f:
+        ts=pickle.load(f)
+
+with open('data/pickled_dataframes/df_full_clean.pickle', 'rb') as f:
+        df_full=pickle.load(f)
 
 app = dash.Dash(__name__)#, external_stylesheets=external_stylesheets)
-
 
 app.layout = html.Div(
                     children=[
@@ -139,9 +147,15 @@ app.layout = html.Div(
                                                                 id='county_map',
                                                                 figure=plot_county_map(df_grouped_county))]
                                                     ),
+
+                                            html.Div(children=[
+
+                                                dcc.Graph(
+                                                    id='predictions',
+                                                    figure=plot_predictions_px(ts, model, 'Crime Data and Forecast for Two Years'))
                                                     ]
-                                            ),
-                            ]
+                                            )
+                            ])]
                     )
 
 @app.callback(

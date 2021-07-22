@@ -607,7 +607,7 @@ def plot_predictions_px(ts, model, title, steps=104, xmin='2009', xmax='2022', f
     forecast_conf = forecast.conf_int()
 
     # Plotting
-            
+
     fig = go.Figure([
     go.Scatter(
         name='Crime Data',
@@ -623,10 +623,9 @@ def plot_predictions_px(ts, model, title, steps=104, xmin='2009', xmax='2022', f
         line=dict(width=0),
         showlegend=False
     ),
-        
-        
+         
     go.Scatter(
-        name='Prediction',
+        name='Forecast with Confidence Intervals',
         x=forecast.predicted_mean.index,
         y=forecast.predicted_mean.values,
         marker=dict(color='black'),
@@ -647,10 +646,34 @@ def plot_predictions_px(ts, model, title, steps=104, xmin='2009', xmax='2022', f
         showlegend=False
     )
 ])
-    
+    fig.update_layout(
+    template='ggplot2',
+    title=title
+    )
 
-    fig.update_layout(width=1000,
-                  height=700,
-                  bargap=0.05)                     
-                          
+    fig.update_layout(
+        font_family="Calibri",
+        font_color="black",
+        font_size=20,
+        legend_font_size=18,
+        title_font_family="Calibri",
+        title_font_size=36)
+
+    fig.update_layout(width=1200,
+                      height=600)
+
+    fig.update_layout(
+        title={
+            'y':0.91,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top',
+        },
+        yaxis = dict(
+                title = 'Number of Offenses',zeroline=True,
+                showline = True),
+        xaxis = dict(
+                title = 'Year',zeroline=True,
+                showline = True),
+                )
     return fig
