@@ -1,6 +1,6 @@
 ![headline image](images/background5.png)
 
-<br><br><center><b><font size="6">Modeling and Forecasting Crime Rate in Colorado </font></b></center>
+<br><br><center><span style="color:black; font-size:3em"><b>Modeling and Forecasting Crime Rate in Colorado</b></span></center>
 
 <br><br><span style="color:black; font-size:1.5em">**Data Science Capstone Project**</span><br>
 * Author name: <b>Elena Kazakova</b>
