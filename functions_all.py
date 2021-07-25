@@ -285,11 +285,12 @@ def decomposing(ts):
     matplotlib.rc_file_defaults()
 
     decomposition=seasonal_decompose(ts)
-    fig=plt.figure()
-    fig=decomposition.plot()
-    fig.set_size_inches(15,10)
-    fig.set_facecolor('lightgrey')
-    fig.suptitle('Decomposition Plots', fontsize=20, color='r')
+    fig=plt.figure();
+    fig=decomposition.plot();
+    fig.set_size_inches(15,10);
+    fig.set_facecolor('lightgrey');
+    fig.suptitle('Decomposition Plots', fontsize=20, color='r');
+    return fig
 
     
 def create_ts_dict(column, df_, freq='W' ):
