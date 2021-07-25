@@ -143,5 +143,5 @@ As a result, the training set had 262 weeks between 2015 and the middle of 2019,
 &ensp;&ensp;&ensp;&ensp;4.&ensp;&ensp;Add geographic locations of committed offenses to improve knowledge of most crime-prone areas to plan for resources and preventive measures.<br>
 &ensp;&ensp;&ensp;&ensp;5.&ensp;&ensp;Improve performance and quality of the web-based 'Crime in Colorado' application.</span><br><br>
 
-
+## All PDF versions of notebooks and presentation can be found in pdfs folder
 ## For any additional questions, please contact **Elena Kazakova @ e.v.kazakova@gmail.com**
