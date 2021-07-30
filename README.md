@@ -118,7 +118,7 @@ As a result, the training set had 262 weeks between 2015 and the middle of 2019,
 
 <br><span style="font-size:1.2em;">Based on the fact that the crime rate seemingly had downturns around holiday season I included exogenous predictors (US holiday time-series) into the mode. However, I used the same best combination from the previous gridsearch of ARIMA(3, 1, 0)x(3, 1, 0, 52). The results of the testing and forecasting were virtually the same.</span><br><br>
 
-<span style="font-size:1.2em;">The last step in the modeling of the general crime rate was using an auto-arima approach to search for the best combination of p,d,q and P,D,Q,d for ten and seasonal components of the time-series. The best model generated was a SARIMAX(1, 1, 1)x(2, 1, 0, 52) model. It displayed a relatively good fit with the test data and a </span><br><br>
+<span style="font-size:1.2em;">The last step in the modeling of the general crime rate was using an auto-arima approach to search for the best combination of p,d,q and P,D,Q,d for ten and seasonal components of the time-series. The best model generated was a SARIMAX(1, 1, 1)x(2, 1, 0, 52) model. The model predicted test data values relatively well and the forecast for two future years is reasonable.</span><br><br>
 
 ![png](images/capstone_project_62_0.png)
 
@@ -137,11 +137,40 @@ As a result, the training set had 262 weeks between 2015 and the middle of 2019,
 
 # Recommendations
 
-<span style="font-size:1.2em;">&ensp;&ensp;&ensp;&ensp;1.&ensp;&ensp;The first recommendation is to obtain current data; it is difficult to forecast future trends with data almost two years old.<br>
-&ensp;&ensp;&ensp;&ensp;2.&ensp;&ensp;Suppose dynamic data becomes available, build and an API. This approach would be the most helpful to the general public.<br>
-&ensp;&ensp;&ensp;&ensp;3.&ensp;&ensp;Add exogenous predictors to the time-series to improve modeling performance. The most helpful predictors would be the socio-economic features of the geographic areas.<br>
+<span style="font-size:1.2em;">&ensp;&ensp;&ensp;&ensp;1.&ensp;&ensp;Obtain current data; isn't easy to forecast future trends with data almost two years old
+<br>
+&ensp;&ensp;&ensp;&ensp;2.&ensp;&ensp;Suppose dynamic data becomes available, build an API. This approach would be the most helpful to the general public
+<br>
+&ensp;&ensp;&ensp;&ensp;3.&ensp;&ensp;Add exogenous predictors to the time-series to improve modeling performance. The most helpful predictors would be:
+<br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;a.&ensp;&ensp;Socio-economic features of the geographic areas<br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;i.&ensp;&ensp;Median Income<br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;ii.&ensp;&ensp;Population Distribution between Racial and Ethnic groups<br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;iii.&ensp;&ensp;Population Distribution between Age groups<br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;iii.&ensp;&ensp;Unemployment Level<br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;b.&ensp;&ensp;Additional offenders’ and victims’ demographics<br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;i.&ensp;&ensp;Income<br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;ii.&ensp;&ensp;Education<br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;iii.&ensp;&ensp;Family Status<br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;c.&ensp;&ensp;Information about local crime prevention measures and policies<br>
 &ensp;&ensp;&ensp;&ensp;4.&ensp;&ensp;Add geographic locations of committed offenses to improve knowledge of most crime-prone areas to plan for resources and preventive measures.<br>
 &ensp;&ensp;&ensp;&ensp;5.&ensp;&ensp;Improve performance and quality of the web-based 'Crime in Colorado' application.</span><br><br>
+
+# "Crime in Colorado" Dash application
+
+<span style="font-size:1.2em;">&ensp;&ensp; `Crime in Colorado` web application will be available for general public use and includes interactive visualization and modeling results. It is planned to be deployed on Heroku web platform in early August 2021. Please find below some images from the application:<br><br>1. Interactive image of the general crime model forecast with hover over capability</span><br>
+
+<img src="images/application_screenshot1.png" alt="drawing" width="800"/><br>
+<br>2. Interactive images of the crime rates in various categories with time slider and an option of selecting categories</span><br>
+<br>
+
+<img src="images/application_screenshot2.png" alt="drawing" width="800"/><br><br>
+<img src="images/application_screenshot3.png" alt="drawing" width="800"/><br><br>
+<br>3. Animated bar chart of the crime against categories with time slider and an option of selecting categories and animated map of Colorado countied colored by their crime rate</span><br>
+<br>
+
+<img src="images/application_screenshot4.png" alt="drawing" width="800"/><br><br><br>
+
 
 ## All PDF versions of notebooks and presentation can be found in pdfs folder
 ## For any additional questions, please contact **Elena Kazakova @ e.v.kazakova@gmail.com**

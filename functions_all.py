@@ -523,7 +523,7 @@ def check_stationarity_multiple(ts_dict, window=52, plot=True):
             dict_non_stationary_diff[crime]=ts.diff().dropna()
             
         if plot:
-           with plt.style.context('ggplot'):
+            with plt.style.context('ggplot'):
                 fig, ax = plt.subplots(figsize=(12,4))
                 
                 #matplotlib.rc_file_defaults()
@@ -678,3 +678,45 @@ def plot_predictions_px(ts, model, title, steps=104, xmin='2009', xmax='2022', f
                 showline = True),
                 )
     return fig
+
+def predictions_testset(ts1, ts2, model, steps=26, figsize=(15,7), xmin='2018', xmax='2020', egog_flag=False, exog=None):
+    """Functions to predict test set with confidence intervals
+    Arguments:
+    ts1: training set timeseries
+    ts2: test set timeseries
+    model: predictive model
+    steps: number of weeks to make predictions
+    figsize: figure size
+    xmin: begining of prediction interval
+    xmax: end of prediction interval"""
+    
+    
+    if egog_flag:
+        forecast = model.get_forecast(steps=steps, exog=exog)
+    else:
+        forecast = model.get_forecast(steps=steps)
+
+    forecast_conf = forecast.conf_int()
+
+# Plotting
+    with plt.style.context('ggplot'):
+        fig, ax = plt.subplots(figsize=figsize)
+        ax = ts1.plot(label='Known Training Data')
+        ax = ts2.plot(label='Known Test Data', figsize=figsize)
+        forecast.predicted_mean.plot(ax=ax, label='Test Set Prediction')
+
+        ax.fill_between(forecast_conf.index,
+                            forecast_conf.iloc[:, 0],
+                            forecast_conf.iloc[:, 1], color='g', alpha=0.25)
+
+        ax.set_title('Prediction for the Test Set with Confidence Intervals', fontsize=20);
+
+        ax.set_ylabel('Offense Counts', fontsize=18);
+        ax.set_xlabel('Year', fontsize=18);
+        ax.tick_params(axis='x', labelsize=16)
+        ax.tick_params(axis='y', labelsize=16)
+        ax.set_xlim(xmin, xmax);
+
+        plt.legend(loc='upper left', fontsize=15);
+        plt.show()
+        return fig
