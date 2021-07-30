@@ -18,7 +18,7 @@ import pandas as pd
 from pandas import Grouper
 import datetime as dt
 import plotly.io as pio
-#import json
+import json
 from dash.dependencies import Input, Output, State
 import dash_html_components as html
 #from functions_all import *
@@ -41,121 +41,125 @@ with open('../data/pickled_dataframes/df_full_clean.pickle', 'rb') as f:
 app = dash.Dash(__name__)#, external_stylesheets=external_stylesheets)
 
 app.layout = html.Div(
-                    children=[
+                        children=[
     
-                                 html.H1(style={'color': 'red',
-                                               'font-size': '100px',
-                                               'font-family':'Ariel',
-                                               'textAlign':'center',
-                                               'background-color': 'black',
-                                               'border':'none',
-                                                'padding':'5px',
-                                                'textAlign': 'center',
-                                                'box-shadow': '0 8px 16px 0 rgba(0,0,0,0.5), 0 6px 20px 0 rgba(0,0,0,1)',
-                                                'height':'200px'},
-                                         children='Crime in Colorado'),
+                                                html.H1(style={'color': 'red',
+                                                                'font-size': '100px',
+                                                                'font-family':'Ariel',
+                                                                'textAlign':'center',
+                                                                'background-color': 'black',
+                                                                'border':'none',
+                                                                'padding':'3px',
+                                                                'box-shadow': '0 8px 16px 0 rgba(0,0,0,0.5), 0 6px 20px 0 rgba(0,0,0,1)',
+                                                                'height':'200px'},
+                                                children='Crime in Colorado'),
+
+                                                html.Div(style={'border':'none',
+                                                                'padding':'2px',
+                                                                'margin-left': '27%'},
+
+                                                        children=[
+                                                                dcc.Graph(
+                                                                        id='predictions',
+                                                                        figure=plot_predictions_px(ts, model, 'Crime Data and Forecast for Two Years'))
+                                                                ]),
              
-                                 html.Div(
-                                          children=[
+                                                html.Div(
+                                                        children=[
     
-                                                    html.Div(style={'border':'none',
-                                                                    'padding':'5px',
-                                                                    'textAlign': 'center',
-                                                                    'box-shadow': '0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)',
-                                                                    'width':'70%',
-                                                                    'margin-left': '280px'},
-                                                            id='menu',
-                                                            children=[
-                                                                html.H3(style={'color': 'black',
-                                                                                'font-size': '20px',
-                                                                                'font':'Ariel',
-                                                                                'textAlign':'center'},
-                                                                         children='Filter out by crime category and date'),
+                                                                html.Div(style={'border':'none',
+                                                                                'padding':'5px',
+                                                                                'textAlign': 'center',
+                                                                                'box-shadow': '0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)',
+                                                                                'width':'50%',
+                                                                                'margin-left': '29%'
+                                                                    },
+                                                                        id='menu',
+                                                                        children=[
+                                                                                html.H3(style={'color': 'black',
+                                                                                                'font-size': '20px',
+                                                                                                'font':'Ariel',
+                                                                                                'textAlign':'center'},
+                                                                                        children='Filter out by crime category and date'),
                                                                 
                                                                 
-                                                                dcc.Dropdown(
-                                                                     style={'color': 'black',
-                                                                        'font-size': '20px',
-                                                                        'font-family':'Ariel',
-                                                                        'textAlign':'center',
-                                                                        'margin-left': '130px',
-                                                                        'width':'70%'},
-                                                                     id='crime_categories_menu', 
-                                                                     options=make_menu_options(list(df_crime_categories.offense_category_name.unique())),
-                                                                     multi=True),
+                                                                                dcc.Dropdown(
+                                                                                                style={'color': 'black',
+                                                                                                        'font-size': '20px',
+                                                                                                        'font-family':'Ariel',
+                                                                                                        'textAlign':'center',
+                                                                                                        'margin-left': '25%',
+                                                                                                        'width':'70%'},
+                                                                                                id='crime_categories_menu', 
+                                                                                                options=make_menu_options(list(df_crime_categories.offense_category_name.unique())),
+                                                                                                                                multi=True),
                                                                 
-                                                                html.H3(style={
-                                                                            'font-size': '10px',
-                                                                            'textAlign':'center'}),
+                                                                                html.H3(style={
+                                                                                                'font-size': '10px',
+                                                                                                'textAlign':'center'}),
 
-                                                                dcc.DatePickerRange(
-                                                                        id='my-date-picker-range',
-                                                                        start_date=dt.date(2009, 1, 1),
-                                                                        end_date=dt.date(2020, 1, 1),
-                                                                        min_date_allowed=dt.date(2009, 1, 1),
-                                                                        max_date_allowed=dt.date(2020, 1, 1)),
+                                                                                dcc.DatePickerRange(
+                                                                                                        id='my-date-picker-range',
+                                                                                                        start_date=dt.date(2009, 1, 1),
+                                                                                                        end_date=dt.date(2020, 1, 1),
+                                                                                                        min_date_allowed=dt.date(2009, 1, 1),
+                                                                                                        max_date_allowed=dt.date(2020, 1, 1)),
                                                                 
-                                                                html.H3(style={'font-size':'10px',
-                                                                              'textAlign':'center'}),
+                                                                                html.H3(style={'font-size':'10px',
+                                                                                                'textAlign':'center'}),
                                                                 
-                                                                html.Button('Submit',id='submit', n_clicks=0,
-                                                                             style={'background-color': '#e7e7e7',
-                                                                                    'border': 'black',
-                                                                                    'color': 'black',
-                                                                                    'padding': '20px 40px',
-                                                                                    'text-align': 'center',
-                                                                                    'button-align': 'center',
-                                                                                    'text-decoration': 'none',
-                                                                                    'display': 'inline-block',
-                                                                                    'font-size': '20px',
-                                                                                    'margin': '8px 6px',
-                                                                                    'border-radius': '12px',
-                                                                                    'box-shadow': '0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)'}
-                                                                            )
-                                                  ],
+                                                                                html.Button('Submit',id='submit', n_clicks=0,
+                                                                                                style={'background-color': '#e7e7e7',
+                                                                                                        'border': 'black',
+                                                                                                        'color': 'black',
+                                                                                                        'padding': '20px 40px',
+                                                                                                        'text-align': 'center',
+                                                                                                        'button-align': 'center',
+                                                                                                        'text-decoration': 'none',
+                                                                                                        'display': 'inline-block',
+                                                                                                        'font-size': '20px',
+                                                                                                        'margin': '8px 6px',
+                                                                                                        'border-radius': '12px',
+                                                                                                        'box-shadow': '0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)'}
+                                                                                                        )
+                                                                                ],
                                                             
                                                             
-                                                    ),
+                                                                        ),
 
-                                            html.Div(style={'border':'none',
-                                                          'padding':'3px',
-                                                          'align': 'left'},
-                                                          children=[                                
+                                                                        html.Div(style={'border':'none',
+                                                                                        'padding':'3px',
+                                                                                        'align': 'center'},
+                                                                                children=[                                
 
-                                                            dcc.Graph(
-                                                                          id='crime_categories',
-                                                                          figure=plot_crime(df_crime_categories))]),
+                                                                                        dcc.Graph(style={'border':'none',
+                                                                                                        'padding':'8px',
+                                                                                                        'margin-left': '25%'},
+                                                                                                id='crime_categories',
+                                                                                                figure=plot_crime(df_crime_categories))]),
 
-                                            html.Div(style={'border':'none',
-                                                          'padding':'3px',
-                                                          'align': 'right',
-                                                          'width':'48%',
-                                                          'display':'inline-block'},
-                                                          children=[                                
+                                                                        html.Div(style={'border':'none',
+                                                                                'padding':'3px',
+                                                                                'align': 'right',
+                                                                                'width':'48%',
+                                                                                'display':'inline-block'},
+                                                                                children=[                                
 
-                                                            dcc.Graph(
-                                                                id='crime_against',
-                                                                figure=plot_crime_against(df_grouped_crime_against))]),
+                                                                                        dcc.Graph(
+                                                                                                id='crime_against',
+                                                                                                figure=plot_crime_against(df_grouped_crime_against))]),
 
-                                            html.Div(style={'border':'none',
-                                                        'padding':'3px',
-                                                        'align': 'left',
-                                                        'width':'48%',
-                                                        'display':'inline-block'},
-                                                        children=[                                
+                                                                        html.Div(style={'border':'none',
+                                                                                        'padding':'3px',
+                                                                                        'align': 'left',
+                                                                                        'width':'48%',
+                                                                                        'display':'inline-block'},
+                                                                                children=[                                
 
-                                                            dcc.Graph(
-                                                                id='county_map',
-                                                                figure=plot_county_map(df_grouped_county))]
-                                                    ),
-
-                                            html.Div(children=[
-
-                                                dcc.Graph(
-                                                    id='predictions',
-                                                    figure=plot_predictions_px(ts, model, 'Crime Data and Forecast for Two Years'))
-                                                    ]
-                                            )
+                                                                                        dcc.Graph(
+                                                                                                id='county_map',
+                                                                                                figure=plot_county_map(df_grouped_county))]
+                                                    )
                             ])]
                     )
 

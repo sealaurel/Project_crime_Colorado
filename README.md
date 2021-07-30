@@ -158,7 +158,7 @@ As a result, the training set had 262 weeks between 2015 and the middle of 2019,
 
 # "Crime in Colorado" Dash application
 
-<span style="font-size:1.2em;">&ensp;&ensp; `Crime in Colorado` web application will be available for general public use and includes interactive visualization and modeling results. It is planned to be deployed on Heroku web platform in early August 2021. Please find below some images from the application:<br><br>1. Interactive image of the general crime model forecast with hover over capability</span><br>
+<span style="font-size:1.2em;">&ensp;&ensp; `Crime in Colorado` web application will be available for general public use. It  includes interactive visualization and modeling results. The application has visuals with the general and categorical crime information, a dropdown menu of crime categories, a date range selector, and a date slider to zoom into a particular period. Statistical visuals are also interactive and animated; a user can start the animation to view how offenses in `crime against` categories were changing between 2009 and 2019. An Animated map of state counties colored based on the number of crimes committed in a county is also available to the general public. The application is planned to be deployed on the Heroku web platform in early August 2021. Please find below some images from the application:<br><br>1. Interactive image of the general crime model forecast with hover over capability.</span><br>
 
 <img src="images/application_screenshot1.png" alt="drawing" width="800"/><br>
 <br>2. Interactive images of the crime rates in various categories with time slider and an option of selecting categories</span><br>
